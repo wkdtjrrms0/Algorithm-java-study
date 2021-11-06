@@ -1,6 +1,7 @@
 import java.io.*;
-        import java.util.Arrays;
-        import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -11,8 +12,20 @@ public class Main {
         for(int i = 0; i < 9; i++){
             Num[i] = Integer.parseInt(bf.readLine());
         }
-        Arrays.sort(Num);
-        String result = String.valueOf(Num[8]) + "\n" + String.valueOf(Num[0]);
+
+        int max = 0;
+        int index = 0;
+
+        int count = 0;
+        for(int value:Num){
+            count++;
+            if(value>max){
+                max = value;
+                index = count;
+            }
+        }
+
+        String result = (String.valueOf(max) + "\n" + String.valueOf(index));
         bw.write(result);
         bw.flush();
         bw.close();
