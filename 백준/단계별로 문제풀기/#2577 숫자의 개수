@@ -37,7 +37,7 @@ public class Main {
         }
         StringBuilder result= new StringBuilder();
         for(int i = 0; i < 10; i++){
-            result.append(count[i]);
+            result.append(String.valueOf(count[i]));
             if(i != 9){
                 result.append("\n");
             }
