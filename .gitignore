@@ -3,3 +3,5 @@
 
 # no .png files
 *.png
+/out/
+/.idea/
