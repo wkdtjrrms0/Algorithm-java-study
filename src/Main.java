@@ -1,21 +1,21 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.math.BigInteger;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        String[] strN = br.readLine().split(" ");
-        int A = Integer.parseInt(strN[0]);
-        int B = Integer.parseInt(strN[1]);
-        int V = Integer.parseInt(strN[2]);
 
-        int result = (V - B) / (A - B);
-        if((V - B) % (A - B) != 0){
-            result++;
-        }
-        bw.write(Integer.toString(result));
-        bw.flush();
-        bw.close();
-        br.close();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+
+        BigInteger A = new BigInteger(st.nextToken());
+        BigInteger B = new BigInteger(st.nextToken());
+
+        A = A.add(B);
+
+        System.out.println(A.toString());
     }
 }
