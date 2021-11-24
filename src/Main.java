@@ -1,33 +1,35 @@
 import java.io.*;
-import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int test = Integer.parseInt(br.readLine());
-        String[][] str = new String[test][3];
-        int[][] HWN = new int[test][3];
-        for(int i = 0; i < test; i++){
-            str[i] = br.readLine().split(" ");
-            HWN[i][0] = Integer.parseInt(str[i][0]);
-            HWN[i][1] = Integer.parseInt(str[i][1]);
-            HWN[i][2] = Integer.parseInt(str[i][2]);
-            bw.write(Integer.toString(hotelInfo(HWN[i][0], HWN[i][1], HWN[i][2])));
-            bw.write("\n");
+        String[] strN = br.readLine().split(" ");
+        int max = Math.max(strN[0].length(), strN[1].length());
+        int[] A = new int[max + 1];
+        int[] B = new int[max + 1];
+
+        for(int i = strN[0].length() - 1, j = 0; i >= 0; i--, j++){
+            A[j] = strN[0].charAt(i) - '0';
+        }
+        for(int i = strN[1].length() - 1, j = 0; i >= 0; i--, j++){
+            B[j] = strN[1].charAt(i) - '0';
+        }
+
+        for(int i = 0; i < max; i++){
+            int value = A[i] + B[i];
+            A[i] = value % 10;
+            A[i + 1] += value / 10;
+        }
+        if(A[max] != 0){
+            bw.write(Integer.toString(A[max]));
+        }
+        for(int i = A.length - 2; i >= 0; i--){
+            bw.write(Integer.toString(A[i]));
         }
         bw.flush();
         bw.close();
         br.close();
-    }
-
-    static int hotelInfo(int H, int W, int N){
-        if(N % H == 0) {
-            return H * 100 + (N / H);
-        }
-        else{
-            return (N % H) * 100 + (N / H + 1);
-        }
     }
 }
