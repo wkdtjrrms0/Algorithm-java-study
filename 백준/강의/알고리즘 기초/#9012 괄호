@@ -1,41 +1,41 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Stack;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int n = Integer.parseInt(br.readLine());
+        String input;
 
-        int T = Integer.parseInt(br.readLine());
-        for(int i = 0; i < T; i++) {
-            sb.append(solve(br.readLine())).append('\n');
+
+        for(int i = 0; i < n; i++){
+            input = br.readLine();
+            if(inspect(input)){
+                bw.write("YES");
+            }
+            else{
+                bw.write("NO");
+            }
+            bw.write("\n");
         }
-        System.out.println(sb);
+        bw.flush();
+        bw.close();
+        br.close();
     }
-
-    public static String solve(String s) {
+    static boolean inspect(String s){
         Stack<Character> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
-                stack.push(c);
+        for(int j = 0; j < s.length(); j++){
+            if(s.charAt(j) == '('){
+                stack.push(s.charAt(j));
             }
-            else if (stack.empty()) {
-                return "NO";
-            }
-            else {
+            else{
+                if(stack.empty()){
+                    return false;
+                }
                 stack.pop();
             }
         }
-
-        if (stack.empty()) {
-            return "YES";
-        } else {
-            return "NO";
-        }
+        return stack.isEmpty();
     }
 }
