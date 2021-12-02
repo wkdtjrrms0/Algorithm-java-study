@@ -23,9 +23,9 @@ public class Main {
         D[n] = DP(n - 1, D) + 1;
         if(n % 2 == 0) {
             int tmp = DP(n / 2, D) + 1;
-             if( D[n] > tmp) {
-                 D[n] = tmp;
-             }
+            if( D[n] > tmp) {
+                D[n] = tmp;
+            }
         }
         if(n % 3 == 0){
             int tmp = DP(n / 3, D) + 1;
