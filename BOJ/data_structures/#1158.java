@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -8,26 +9,22 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         Queue <Integer> queue = new LinkedList<>();
-        String input = br.readLine();
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-        for(int i = 1; i <= Integer.parseInt(input.split(" ")[0]); i++){
+        for(int i = 1; i <= N; i++){
             queue.offer(i);
         }
 
-        int tmp;
         bw.write("<");
-        while(queue.size() != 0){
-            for(int i = 0; i < Integer.parseInt(input.split(" ")[1]) - 1; i++) {
+        while(queue.size() != 1){
+            for(int i = 0; i < K - 1; i++) {
                 queue.offer(queue.poll());
             }
-            tmp = queue.poll();
-            if(queue.size() != 0) {
-                bw.write(tmp + ", ");
-            }
-            else{
-                bw.write(tmp + ">");
-            }
+            bw.write(queue.poll() + ", ");
         }
+        bw.write(queue.poll() + ">");
         bw.flush();
         bw.close();
         br.close();
