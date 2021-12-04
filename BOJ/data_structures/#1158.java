@@ -1,6 +1,5 @@
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -8,23 +7,25 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        Queue <Integer> queue = new LinkedList<>();
+        ArrayList<Integer> al = new ArrayList<>();
+
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken()) - 1;
 
         for(int i = 1; i <= N; i++){
-            queue.offer(i);
+            al.add(i);
         }
-
+        int index = 0;
         bw.write("<");
-        while(queue.size() != 1){
-            for(int i = 0; i < K - 1; i++) {
-                queue.offer(queue.poll());
+        while(al.size() > 1){
+            index += K;
+            while (index > al.size() - 1) {
+                index -= al.size();
             }
-            bw.write(queue.poll() + ", ");
+            bw.write(al.remove(index) + ", ");
         }
-        bw.write(queue.poll() + ">");
+        bw.write(al.remove(0) + ">");
         bw.flush();
         bw.close();
         br.close();
