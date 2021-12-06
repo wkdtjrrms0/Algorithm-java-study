@@ -5,14 +5,20 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int n = Integer.parseInt(br.readLine());
-        int[] memo = new int[1001];
-        memo[1] = 1;
-        memo[2] = 2;
-        for(int i = 3; i <= n; i++){
-            memo[i] = (memo[i - 1] + memo[i - 2]) % 10007;
+
+        int num = Integer.parseInt(br.readLine());
+        int[] D = new int[num + 1];
+        D[1] = 0;
+        for(int i = 2; i <= num; i++){
+            D[i] = D[i - 1] + 1;
+            if(i % 2 == 0 && D[i] > D[i / 2] + 1){
+                D[i] = D[i / 2] + 1;
+            }
+            if(i % 3 == 0 && D[i] > D[i / 3] + 1){
+                D[i] = D[i / 3] + 1;
+            }
         }
-        bw.write(Integer.toString(memo[n]));
+        bw.write(Integer.toString(D[num]));
         bw.flush();
         bw.close();
         br.close();
@@ -26,26 +32,36 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int N = Integer.parseInt(br.readLine());
-        int[] Memo = new int[N];
-        bw.write(Integer.toString(D(N, Memo)));
+
+        int num = Integer.parseInt(br.readLine());
+        int[] D = new int[num + 1];
+        bw.write(String.valueOf(DP(num, D)));
         bw.flush();
         bw.close();
         br.close();
     }
 
-    static int D(int N, int[] Memo){
-        if(N == 1){
-            return 1;
+    static int DP(int n, int[] D){
+        if(n == 1){
+            return 0;
         }
-        if(N == 2){
-            return 2;
+        if(D[n] > 0) {
+            return D[n];
         }
-        if(Memo[N - 1] != 0.0){
-            return Memo[N - 1];
+        D[n] = DP(n - 1, D) + 1;
+        if(n % 2 == 0) {
+            int tmp = DP(n / 2, D) + 1;
+            if( D[n] > tmp) {
+                D[n] = tmp;
+            }
         }
-        Memo[N - 1] = (D(N - 1, Memo) + D(N - 2, Memo)) % 10007;
-        return Memo[N - 1];
+        if(n % 3 == 0){
+            int tmp = DP(n / 3, D) + 1;
+            if( D[n] > tmp) {
+                D[n] = tmp;
+            }
+        }
+        return D[n];
     }
 }
- */
+*/
