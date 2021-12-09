@@ -19,7 +19,7 @@ public class Main {
         for(int i = 1; i <= n; i++){
             for(int j = 1; j <= i; j++) {
                 if(D[i - j] + numArr[j - 1] > D[i])
-                D[i] = D[i - j] + numArr[j - 1];
+                    D[i] = D[i - j] + numArr[j - 1];
             }
         }
         bw.write(Integer.toString(D[n]));
