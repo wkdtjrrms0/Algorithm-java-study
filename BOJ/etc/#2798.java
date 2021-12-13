@@ -15,7 +15,7 @@ public class Main {
         for(int i = 0; i < N; i++){
             cardNum[i] = Integer.parseInt(st.nextToken());
         }
-        int gap;
+        int gap = 0;
         int minGap = 299997;
         for(int i = 0; i < N - 2; i++){
             for(int j = i + 1; j < N - 1; j++){
