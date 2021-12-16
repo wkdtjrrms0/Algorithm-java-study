@@ -1,4 +1,4 @@
-/* Bottom-Up
+// Bottom-Up
 import java.io.*;
 
 public class Main {
@@ -34,9 +34,9 @@ public class Main {
         br.close();
     }
 }
-*/
+//
 
-// Top-Down
+/* Top-Down
 import java.io.*;
 
 public class Main {
@@ -80,4 +80,4 @@ public class Main {
         return D[n][val] % 1000000000;
     }
 }
-//
+*/
