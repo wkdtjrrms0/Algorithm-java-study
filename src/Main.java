@@ -1,26 +1,71 @@
-import java.util.*;
+// Bottom-Up
+import java.io.*;
+
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
 
-    static int[][] dp;
-    public static void main(String[] args)   {
-        Scanner sc = new Scanner(System.in);
-        int n= sc.nextInt();
-        dp = new int [n+1][10];
-
-        dp[1][0] = dp[1][1] =dp[1][2] = dp[1][3] =dp[1][4] = dp[1][5] =dp[1][6] = dp[1][7] =dp[1][8] = dp[1][9] =1;
-
-        for(int i=2;i<=n;i++) {
-            for(int j=0;j<10;j++) {
-                for(int k=0;k<=j;k++) {
-                    dp[i][j] += dp[i-1][k];
+        long[][] DP = new long[N + 1][10];
+        for(int i = 0; i < 10; i++){
+            DP[1][i] = 1;
+        }
+        for(int i = 2; i <= N; i++){
+            for(int j = 0; j < 10; j++){
+                for(int k = 0; k <= j; k++) {
+                    DP[i][j] += DP[i - 1][k];
+                    DP[i][j] %= 10007;
                 }
-                dp[i][j] %= 10007;
             }
         }
-        int sum = 0;
-        for(int i=0;i<10;i++) {
-            sum+=dp[n][i];
+        long result = 0;
+        for(long i : DP[N]){
+            result += i;
         }
-        System.out.println(sum % 10007);
+        bw.write(Long.toString(result % 10007));
+        bw.flush();
+        bw.close();
+        br.close();
     }
 }
+//
+
+/* Top-Down
+import java.io.*;
+
+public class Main {
+    public static long DP[][];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        DP = new long[N + 1][10];
+        long result = 0;
+;
+        for(int i = 0; i < 10; i++){
+            result += D(N, i);
+        }
+        bw.write(Long.toString(result % 10007));
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+
+    public static long D(int N, int dig){
+        if(N == 1){
+            return 1;
+        }
+        if(DP[N][dig] > 0){
+            return DP[N][dig];
+        }
+        for(int j = 0; j < 10; j++){
+            for(int k = 0; k <= j; k++) {
+                DP[N][j] += D(N - 1, k);
+                DP[N][j] %= 10007;
+            }
+        }
+        return DP[N][dig];
+    }
+}
+ */
