@@ -2,37 +2,41 @@ import java.util.Scanner;
 
 public class Main {
 
+    static int[] seq;
     static Integer[] dp;
-    static int[] arr;
 
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-
         int N = in.nextInt();
+        seq = new int[N];
+        dp = new Integer[N];
 
-        dp = new Integer[N + 1];
-        arr = new int[N + 1];
-
-        for (int i = 1; i < N + 1; i++) {
-            arr[i] = in.nextInt();
+        for(int i = 0; i < N; i++) {
+            seq[i] = in.nextInt();
+        }
+        for(int i = 0; i < N; i++) {
+            LIS(i);
         }
 
-        dp[0] = 0;
-        dp[1] = arr[1];
-        if (N > 1) {
-            dp[2] = arr[1] + arr[2];
+        int max = dp[0];
+        for(int i = 1; i < N; i++) {
+            max = Math.max(max, dp[i]);
         }
-
-        System.out.println(recur(N));
+        System.out.println(max);
     }
 
-    static int recur(int N) {
 
-        if (dp[N] == null) {
-            dp[N] = Math.max(Math.max(recur(N - 2), recur(N - 3) + arr[N - 1]) + arr[N], recur(N - 1));
+    static int LIS(int N) {
+
+        if(dp[N] == null) {
+            dp[N] = 1;
+            for(int i = N - 1; i >= 0; i--) {
+                if(seq[i] < seq[N]) {
+                    dp[N] = Math.max(dp[N], LIS(i) + 1);
+                }
+            }
         }
-
         return dp[N];
     }
 }
