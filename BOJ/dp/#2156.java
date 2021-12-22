@@ -10,7 +10,7 @@ public class Main {
         int[] Val = new int[n + 1];
 
         for (int i = 0; i < n; i++) {
-            Val[i + 1] = Integer.parseInt(br.readLine());
+            Val[i + 1] = Integer.parseInt(br.readLine());;
         }
         DP[0] = 0;
         DP[1] = Val[1];
