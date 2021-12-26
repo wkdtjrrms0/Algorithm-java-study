@@ -1,21 +1,26 @@
 import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int n = Integer.parseInt(br.readLine());
-        String str = br.readLine();
-        long result = 0;
-        for(int i = 0; i < n; i++){
-            result += (str.charAt(i) - 'a' + 1) * pow(31, i);
-        }
-        bw.write(Long.toString(result % 1234567891));
+
+        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
+
+        int c = gcf(a, b);
+        bw.write(c + "\n");
+        bw.write(Integer.toString(a * b / c));
         bw.flush();
         bw.close();
         br.close();
+
     }
-    static long pow(int a,int b){
-        return b == 0 ? 1 : a * pow(a,b-1) % 1234567891;
+    public static int gcf(int a, int b) {
+        if (b == 0)
+            return a;
+        return gcf(b, a % b);
     }
 }
