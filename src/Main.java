@@ -1,27 +1,24 @@
-import java.io.*;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
-        int n = Integer.parseInt(br.readLine());
-        for(int i = 0; i < n; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = gcf(a, b);
-            bw.write(a * b / c + "\n");
+    public static boolean[] test;
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int M = in.nextInt();
+        int N = in.nextInt();
+        test = new boolean[N + 1];
+        get_test();
+        for(int i = M; i <= N; i++) {
+            if(!test[i]) System.out.println(i);
         }
-        bw.flush();
-        bw.close();
-        br.close();
-
     }
-    public static int gcf(int a, int b) {
-        if (b == 0)
-            return a;
-        return gcf(b, a % b);
+    public static void get_test() {
+        test[0] = test[1] = true;
+        for(int i = 2; i <= Math.sqrt(test.length); i++) {
+            if(test[i]) continue;
+            for(int j = i * i; j < test.length; j += i) {
+                test[j] = true;
+            }
+        }
     }
 }
