@@ -3,12 +3,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * Info: BOJ#1920 수 찾기
- * Ref: https://www.acmicpc.net/problem/1920
+ * Info: BOJ#10807 개수 세기
+ * Ref: https://www.acmicpc.net/problem/10807
  */
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -16,26 +15,16 @@ public class Main {
         BufferedWriter bw  = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-        int[] A = new int[N];
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int v = Integer.parseInt(br.readLine());
+        int cnt = 0;
         for (int i = 0; i < N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
-        }
-
-        Arrays.sort(A);
-
-        int M = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine(), " ");
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < M; i++) {
-            if(Arrays.binarySearch(A, Integer.parseInt(st.nextToken())) >= 0) {
-                sb.append(1).append("\n");
-            } else {
-                sb.append(0).append("\n");
+            if (Integer.parseInt(st.nextToken()) == v) {
+                cnt++;
             }
         }
-        bw.write(sb.toString());
+
+        bw.write(String.valueOf(cnt));
         bw.flush();
         bw.close();
         br.close();
