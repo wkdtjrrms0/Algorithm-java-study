@@ -1,79 +1,91 @@
-import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
 
 /**
- * Info: Leetcode#155 Min Stack Ref:
- * https://leetcode.com/problems/min-stack/description/
+ * Info: BOJ#2108 통계학
+ * Ref: https://www.acmicpc.net/problem/2108
  */
 public class Main {
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-	public static void main(String[] args) {
-		 MinStack obj = new MinStack();
-		 
-		 obj.push(2147483646);
-		 obj.push(2147483646);
-		 obj.push(2147483647);
-		 
-		 int param_1 = obj.top();
-		 
-		 obj.pop();
-		 
-		 int param_2 = obj.getMin();
-		 
-		 obj.pop();
-		 
-		 int param_3 = obj.getMin();
-		 
-		 obj.pop();
-		 
-		 obj.push(2147483647);
-		 
-		 int param_4 = obj.top();
-		 
-		 int param_5 = obj.getMin();
-		 
-		 obj.push(-2147483648);
-		 
-		 int param_6 = obj.top();
+		int N = Integer.parseInt(br.readLine());
+		int[] nums = new int[N];
 
-		 int param_7 = obj.getMin();
-		 
-		 obj.pop();
-		 
-		 int param_8 = obj.getMin();
-	}
-}
-
-
-class MinStack {
-	
-	Stack<Integer> stack;
-	int min = Integer.MAX_VALUE;
-    
-	public MinStack() {
-		stack = new Stack<>();
-	}
-
-	public void push(int val) {
-		stack.push(val);
-		if (min > val) {
-			min = val;
+		for (int i = 0; i < N; i++) {
+			nums[i] = Integer.parseInt(br.readLine());
 		}
-		stack.push(min);
+
+		// 1. 산술평균
+		bw.write(avg(nums) + "\n");
+		// 2. 중앙값
+		bw.write(centerVal(nums) + "\n");
+		// 3. 최빈값
+		bw.write(frequentVal(nums) + "\n");
+		// 4. 범위
+		bw.write(Integer.toString(range(nums)));
+
+		bw.flush();
+		bw.close();
+		br.close();
 	}
 
-	public void pop() {
-		stack.pop();
-		stack.pop();
+	private static int avg (int[] nums) {
+		double sum = 0;
+		for (int num : nums) {
+			sum += num;
+		}
+		return (int) Math.round(sum / nums.length);
 	}
 
-	public int top() {
-		int j = stack.pop();
-		int i = stack.peek();
-		stack.push(j);
-		return  i;
+	private static int centerVal (int[] nums) {
+		Arrays.sort(nums);
+		return nums[nums.length / 2];
 	}
 
-	public int getMin() {
-		return stack.peek();
+	private static int frequentVal(int[] nums) {
+		Arrays.sort(nums);  // 배열을 오름차순으로 정렬
+
+		boolean flag = false;
+		int mode_max = 0;
+		int mode = 10000;
+
+		for(int i = 0; i < nums.length; i++) {
+			int jump = 0;
+			int count = 1;
+			int i_value = nums[i];
+
+			for(int j = i + 1; j < nums.length; j++){
+				if(i_value != nums[j]) {
+					break;
+				}
+				count++;
+				jump++;
+			}
+
+			if(count > mode_max) {
+				mode_max = count;
+				mode = i_value;
+				flag = true;
+			}
+			else if(count == mode_max && flag) {
+				mode = i_value;
+				flag = false;
+			}
+
+			i += jump;
+		}
+
+		return mode;
+	}
+
+	private static int range (int[] nums) {
+		Arrays.sort(nums);
+		return nums[nums.length - 1] - nums[0];
 	}
 }
