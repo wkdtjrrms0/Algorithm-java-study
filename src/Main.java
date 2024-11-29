@@ -1,91 +1,64 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-
 /**
- * Info: BOJ#2108 통계학
- * Ref: https://www.acmicpc.net/problem/2108
+ * Info: Leetcode#230 Kth Smallest Element in a BST
+ * Ref: https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
  */
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		int N = Integer.parseInt(br.readLine());
-		int[] nums = new int[N];
+	static boolean[] nums = new boolean[10001]; // 카운팅 알고리즘
 
-		for (int i = 0; i < N; i++) {
-			nums[i] = Integer.parseInt(br.readLine());
+	public static void main(String[] args) {
+
+		TreeNode root = new TreeNode(3, new TreeNode(1,null, new TreeNode(2)), new TreeNode(4));
+		System.out.println(kthSmallest(root, 1));
+//
+//		TreeNode root = new TreeNode(5, new TreeNode(3, new TreeNode(2, new TreeNode(1), new TreeNode()), new TreeNode(4)), new TreeNode(6));
+//		System.out.println(kthSmallest(root, 3));
+	}
+
+	private static int kthSmallest(TreeNode root, int k) {
+		nums[root.val] = true;
+
+		if (root.left != null) {
+			kthSmallest(root.left, 0);
 		}
 
-		// 1. 산술평균
-		bw.write(avg(nums) + "\n");
-		// 2. 중앙값
-		bw.write(centerVal(nums) + "\n");
-		// 3. 최빈값
-		bw.write(frequentVal(nums) + "\n");
-		// 4. 범위
-		bw.write(Integer.toString(range(nums)));
-
-		bw.flush();
-		bw.close();
-		br.close();
-	}
-
-	private static int avg (int[] nums) {
-		double sum = 0;
-		for (int num : nums) {
-			sum += num;
+		if (root.right != null) {
+			kthSmallest(root.right, 0);
 		}
-		return (int) Math.round(sum / nums.length);
-	}
 
-	private static int centerVal (int[] nums) {
-		Arrays.sort(nums);
-		return nums[nums.length / 2];
-	}
-
-	private static int frequentVal(int[] nums) {
-		Arrays.sort(nums);  // 배열을 오름차순으로 정렬
-
-		boolean flag = false;
-		int mode_max = 0;
-		int mode = 10000;
-
-		for(int i = 0; i < nums.length; i++) {
-			int jump = 0;
-			int count = 1;
-			int i_value = nums[i];
-
-			for(int j = i + 1; j < nums.length; j++){
-				if(i_value != nums[j]) {
-					break;
+		if (k != 0) {
+			int t = 0;
+			for (int i = 0; i <= nums.length; i++) {
+				if (nums[i]) {
+					t++;
+					if (t == k) {
+						return i;
+					}
 				}
-				count++;
-				jump++;
 			}
-
-			if(count > mode_max) {
-				mode_max = count;
-				mode = i_value;
-				flag = true;
-			}
-			else if(count == mode_max && flag) {
-				mode = i_value;
-				flag = false;
-			}
-
-			i += jump;
 		}
+        return 0;
+    }
 
-		return mode;
+
+}
+
+class TreeNode {
+
+	int val;
+	TreeNode left;
+	TreeNode right;
+
+	TreeNode() {
 	}
 
-	private static int range (int[] nums) {
-		Arrays.sort(nums);
-		return nums[nums.length - 1] - nums[0];
+	TreeNode(int val) {
+		this.val = val;
+	}
+
+	TreeNode(int val, TreeNode left, TreeNode right) {
+		this.val = val;
+		this.left = left;
+		this.right = right;
 	}
 }
