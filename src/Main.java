@@ -1,64 +1,46 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.io.IOException;
+
 /**
- * Info: Leetcode#230 Kth Smallest Element in a BST
- * Ref: https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+ * Info: BOJ#1764 듣보잡
+ * Ref: https://www.acmicpc.net/problem/1764
  */
 public class Main {
 
-	static boolean[] nums = new boolean[10001]; // 카운팅 알고리즘
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int M = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) {
-
-		TreeNode root = new TreeNode(3, new TreeNode(1,null, new TreeNode(2)), new TreeNode(4));
-		System.out.println(kthSmallest(root, 1));
-//
-//		TreeNode root = new TreeNode(5, new TreeNode(3, new TreeNode(2, new TreeNode(1), new TreeNode()), new TreeNode(4)), new TreeNode(6));
-//		System.out.println(kthSmallest(root, 3));
-	}
-
-	private static int kthSmallest(TreeNode root, int k) {
-		nums[root.val] = true;
-
-		if (root.left != null) {
-			kthSmallest(root.left, 0);
+		HashSet<String> set = new HashSet<>();
+		for (int i = 0; i < N; i++) {
+			set.add(br.readLine());
 		}
 
-		if (root.right != null) {
-			kthSmallest(root.right, 0);
-		}
-
-		if (k != 0) {
-			int t = 0;
-			for (int i = 0; i <= nums.length; i++) {
-				if (nums[i]) {
-					t++;
-					if (t == k) {
-						return i;
-					}
-				}
+		List<String> result = new ArrayList<>();
+		for (int i = 0; i < M; i++) {
+			String s = br.readLine();
+			if (set.contains(s)) {
+				result.add(s);
 			}
 		}
-        return 0;
-    }
+		Collections.sort(result);
 
-
-}
-
-class TreeNode {
-
-	int val;
-	TreeNode left;
-	TreeNode right;
-
-	TreeNode() {
-	}
-
-	TreeNode(int val) {
-		this.val = val;
-	}
-
-	TreeNode(int val, TreeNode left, TreeNode right) {
-		this.val = val;
-		this.left = left;
-		this.right = right;
+		bw.write(String.valueOf(result.size()) + '\n');
+		for (String s : result) {
+			bw.write(s + "\n");
+		}
+		bw.close();
+		br.close();
 	}
 }
