@@ -4,8 +4,8 @@ import java.util.Deque;
 import java.io.IOException;
 
 /**
- * Info: Programmers#42586 기능개발
- * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/42586?language=java
+ * Info: Programmers#12906 같은 숫자는 싫어
+ * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/12906?language=java
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
