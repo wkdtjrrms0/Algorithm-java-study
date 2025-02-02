@@ -1,34 +1,28 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.Arrays;
 /**
- * Info: BOJ#11279 최대 힙
- * Ref: https://www.acmicpc.net/problem/11279
+ * Info: Programmers#42584 주식가격
+ * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/42584?language=java
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// case 1
+		int[] prices = {1, 2, 3, 2, 3};
 
-		int N = Integer.parseInt(br.readLine());
-		int[] calc = new int[N];
-		for (int i = 0; i < N; i++) {
-			calc[i] = Integer.parseInt(br.readLine());
-		}
-
-		solution(calc);
+		System.out.println(Arrays.toString(solution(prices)));
 	}
 
-	public static void solution(int[] calc) {
-		PriorityQueue<Integer> queue = new PriorityQueue<>(Collections.reverseOrder());
-		int answer = 0;
+	public static int[] solution(int[] prices) {
+		int[] answer = new int[prices.length];
 
-		for (int i : calc) {
-			queue.offer(i);
-			if (i == 0) {
-				System.out.println(queue.poll());
+		for (int i = 0; i < prices.length; i++) {
+			for (int j = i + 1; j < prices.length; j++) {
+				answer[i]++;
+				if (prices[i] > prices[j]) {
+					break;
+				}
 			}
 		}
+		return answer;
 	}
 }
