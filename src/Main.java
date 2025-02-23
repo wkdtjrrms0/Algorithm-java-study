@@ -1,17 +1,47 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.Stack;
 
 /**
- * Info: Programmers#340206 [PCCE 기출문제] 2번 / 각도 합치기
- * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/340206?language=java
+ * Info: BOJ#28278 도키도키 간식드리미
+ * Ref: https://www.acmicpc.net/problem/12789
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Scanner sc = new Scanner(System.in);
-		int angle1 = sc.nextInt();
-		int angle2 = sc.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
 
-		int sum_angle = angle1 + angle2;
-		System.out.println(sum_angle - (360 * (sum_angle/360)));
+		int index = 1;
+		String result = "Nice";
+		String[] sArr = br.readLine().split(" ");
+		Stack<Integer> stack = new Stack<>();
+
+		for(int i = 0; i < N; i++){
+			int currentNum = Integer.parseInt(sArr[i]);
+			if(index != currentNum){
+				if(!stack.isEmpty() && index == stack.peek()){
+					index++;
+					i--;
+					stack.pop();
+				} else {
+					stack.push(currentNum);
+				}
+			} else {
+				index++;
+			}
+		}
+
+		while(!stack.isEmpty()){
+			int pop = stack.pop();
+			if(pop == index){
+				index++;
+			} else {
+				result = "Sad";
+				break;
+			}
+		}
+		System.out.println(result);
 	}
 }
