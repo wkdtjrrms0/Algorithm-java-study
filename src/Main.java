@@ -1,34 +1,31 @@
 import java.io.IOException;
+import java.util.Arrays;
+
 /**
- * Info: Programmers#87946 피로도
- * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/87946?language=java
+ * Info: Programmers#42746 가장 큰 수
+ * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/42746?language=java
  */
 public class Main {
-	static int answer;
-	static boolean[] visited;
-	
     public static void main(String[] args) throws IOException {
         // case 1
-		int k = 80;
-		int[][] dungeons = {{80,20}, {50,40}, {30,10}};
+//		int[] numbers = {6, 10, 2};
+		// case 2
+		int[] numbers = {3, 30, 34, 5, 9};
 
-        System.out.println(solution(k, dungeons));
+        System.out.println(solution(numbers));
     }
 
-    public static int solution(int k, int[][] dungeons) {
-    	visited = new boolean[dungeons.length];
-    	dfs(0, k, dungeons);
-        return answer;
-    }
-    
-    public static void dfs(int depth, int k, int[][] dungeons) {
-    	for (int i = 0; i < dungeons.length; i++) {
-        	if (!visited[i] && dungeons[i][0] <= k) {
-        		visited[i] = true;
-        		dfs(depth + 1, k - dungeons[i][1], dungeons);
-        		visited[i] = false;
-        	}
-        }
-    	answer = Math.max(answer, depth);
-    }
+	public static String solution(int[] numbers) {
+		String[] strNumbers = Arrays.stream(numbers)
+			.mapToObj(String::valueOf)
+			.toArray(String[]::new);
+
+		Arrays.sort(strNumbers, (a, b) -> (b + a).compareTo(a + b));
+
+		if (strNumbers[0].equals("0")) {
+			return "0";
+		}
+
+		return String.join("", strNumbers);
+	}
 }
