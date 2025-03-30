@@ -2,30 +2,37 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Info: Programmers#42746 가장 큰 수
- * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/42746?language=java
+ * Info: Programmers#43238 입국심사
+ * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/43238?language=java
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
-        // case 1
-//		int[] numbers = {6, 10, 2};
-		// case 2
-		int[] numbers = {3, 30, 34, 5, 9};
+	public static void main(String[] args) throws IOException {
+		// case 1
+		int n = 6;
+		int[] times = {7, 10};
 
-        System.out.println(solution(numbers));
-    }
+		System.out.println(solution(n, times));
+	}
 
-	public static String solution(int[] numbers) {
-		String[] strNumbers = Arrays.stream(numbers)
-			.mapToObj(String::valueOf)
-			.toArray(String[]::new);
+	public static long solution(int n, int[] times) {
+		Arrays.sort(times);
+		long answer = 0;
+		long left = 0;
+		long right = (long) times[times.length - 1] * n;
 
-		Arrays.sort(strNumbers, (a, b) -> (b + a).compareTo(a + b));
-
-		if (strNumbers[0].equals("0")) {
-			return "0";
+		while (left <= right) {
+			long mid = (left + right) / 2;
+			long p = 0;
+            for (int time : times) {
+                p += mid / time;
+            }
+			if (p < n) {
+				left = mid + 1;
+			} else {
+				right = mid - 1;
+				answer = mid;
+			}
 		}
-
-		return String.join("", strNumbers);
+		return answer;
 	}
 }
