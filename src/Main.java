@@ -1,38 +1,48 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 /**
- * Info: Programmers#43238 입국심사
- * Ref: https://school.programmers.co.kr/learn/courses/30/lessons/43238?language=java
+ * Info: BOJ#2805 나무 자르기
+ * Ref: https://www.acmicpc.net/problem/2805
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		// case 1
-		int n = 6;
-		int[] times = {7, 10};
-
-		System.out.println(solution(n, times));
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int M = sc.nextInt();
+		int[] trees = new int[N];
+		for (int i = 0; i < N; i++) {
+			trees[i] = sc.nextInt();
+		}
+		System.out.println(solution(trees, M, N));
 	}
 
-	public static long solution(int n, int[] times) {
-		Arrays.sort(times);
-		long answer = 0;
-		long left = 0;
-		long right = (long) times[times.length - 1] * n;
+	public static int solution(int[] trees, int M, int N) {
+		Arrays.sort(trees);
 
+		int left = 0;
+		int right = trees[N - 1];
+		int answer = 0;
 		while (left <= right) {
-			long mid = (left + right) / 2;
-			long p = 0;
-            for (int time : times) {
-                p += mid / time;
-            }
-			if (p < n) {
+			int mid = (left + right) / 2;
+			if (getSumCuttedTreeLength(trees, mid) >= M) {
+				answer = mid;
 				left = mid + 1;
 			} else {
 				right = mid - 1;
-				answer = mid;
 			}
 		}
 		return answer;
+	}
+
+	public static long getSumCuttedTreeLength(int[] trees, int mid) {
+		long sumCuttedTreeLength = 0;
+		for (int i = 0; i < trees.length; i++) {
+			if (trees[i] > mid) {
+				sumCuttedTreeLength += (trees[i] - mid);
+			}
+		}
+		return sumCuttedTreeLength;
 	}
 }
