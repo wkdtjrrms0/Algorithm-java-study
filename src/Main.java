@@ -1,48 +1,37 @@
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Info: BOJ#2805 나무 자르기
- * Ref: https://www.acmicpc.net/problem/2805
+ * Info: BOJ#1300 K번째 수
+ * Ref: https://www.acmicpc.net/problem/1300
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
-		int M = sc.nextInt();
-		int[] trees = new int[N];
-		for (int i = 0; i < N; i++) {
-			trees[i] = sc.nextInt();
-		}
-		System.out.println(solution(trees, M, N));
+		long k = sc.nextInt();
+		System.out.println(solution(N, k));
 	}
 
-	public static int solution(int[] trees, int M, int N) {
-		Arrays.sort(trees);
+	public static long solution(int N, long k) {
+		long left = 1;
+		long right = k;
+		long answer = 0;
 
-		int left = 0;
-		int right = trees[N - 1];
-		int answer = 0;
 		while (left <= right) {
-			int mid = (left + right) / 2;
-			if (getSumCuttedTreeLength(trees, mid) >= M) {
-				answer = mid;
+			long count = 0;
+			long mid = (left + right) / 2;
+			for (int i = 1; i <= N; i++) {
+				count += Math.min(mid / i, N);
+			}
+
+			if (count < k) {
 				left = mid + 1;
 			} else {
 				right = mid - 1;
+				answer = mid;
 			}
 		}
 		return answer;
-	}
-
-	public static long getSumCuttedTreeLength(int[] trees, int mid) {
-		long sumCuttedTreeLength = 0;
-		for (int i = 0; i < trees.length; i++) {
-			if (trees[i] > mid) {
-				sumCuttedTreeLength += (trees[i] - mid);
-			}
-		}
-		return sumCuttedTreeLength;
 	}
 }
