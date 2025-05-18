@@ -1,67 +1,55 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * Info: BOJ#4158 CD
- * Ref: https://www.acmicpc.net/problem/4158
+ * Info: BOJ#2776 암기왕
+ * Ref: https://www.acmicpc.net/problem/2776
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		while(true) {
+		StringBuilder sb = new StringBuilder();
+		int T = Integer.parseInt(br.readLine());
+		for(int i = 0; i < T; i++) {
+			int note1 = Integer.parseInt(br.readLine());
+			int[] note1Num = new int[note1];
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int N = Integer.parseInt(st.nextToken());
-			int M = Integer.parseInt(st.nextToken());
-			if (N == 0 && M == 0) {
-				break;
+			for (int j = 0; j < note1; j++) {
+				note1Num[j] = Integer.parseInt(st.nextToken());
 			}
-			int[] SanggeunCD = new int[N];
-			int[] SeonyeongCD = new int[M];
-			for (int i = 0; i < N; i++) {
-				SanggeunCD[i] = Integer.parseInt(br.readLine());
+			int note2 = Integer.parseInt(br.readLine());
+			int[] note2Num = new int[note2];
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < note2; j++) {
+				note2Num[j] = Integer.parseInt(st.nextToken());
 			}
-			for (int i = 0; i < M; i++) {
-				SeonyeongCD[i] = Integer.parseInt(br.readLine());
-			}
-			System.out.println(solution(N, M, SanggeunCD, SeonyeongCD));
+			solution(note1, note1Num, note2Num, sb);
 		}
+		System.out.println(sb);
 	}
 
-	private static int solution(int N, int M, int[] SanggeunCD, int[] SeonyeongCD) {
-		int result = 0;
-		int s;
-		int t;
-		int[] source;
-		int[] target;
-		if (N > M) {
-			s = M;
-			t = N;
-			source = SeonyeongCD;
-			target = SanggeunCD;
-		} else {
-			s = N;
-			t = M;
-			source = SanggeunCD;
-			target = SeonyeongCD;
-		}
-
-		for (int i = 0; i < s; i++) {
+	private static void solution(int note1, int[] note1Num, int[] note2Num, StringBuilder sb) {
+		Arrays.sort(note1Num);
+		for (int n : note2Num) {
 			int left = 0;
-			int right = t - 1;
+			int right = note1 - 1;
+			int mid;
+			int result = 0;
 			while (left <= right) {
-				int mid = (right + left) / 2;
-				if (target[mid] == source[i]) {
-					result++;
+				mid = (left + right) / 2;
+				if (note1Num[mid] == n) {
+					result = 1;
 					break;
-                } else if (target[mid] > source[i]) {
+				} else if (note1Num[mid] > n) {
 					right = mid - 1;
-				} else if (target[mid] < source[i]) {
+				} else if (note1Num[mid] < n) {
 					left = mid + 1;
 				}
 			}
+			sb.append(result).append('\n');
 		}
-		return result;
 	}
 }
