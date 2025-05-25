@@ -1,55 +1,34 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
 
 /**
- * Info: BOJ#2776 암기왕
- * Ref: https://www.acmicpc.net/problem/2776
+ * Info: BOJ#2417 정수 제곱근
+ * Ref: https://www.acmicpc.net/problem/2417
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		int T = Integer.parseInt(br.readLine());
-		for(int i = 0; i < T; i++) {
-			int note1 = Integer.parseInt(br.readLine());
-			int[] note1Num = new int[note1];
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < note1; j++) {
-				note1Num[j] = Integer.parseInt(st.nextToken());
-			}
-			int note2 = Integer.parseInt(br.readLine());
-			int[] note2Num = new int[note2];
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < note2; j++) {
-				note2Num[j] = Integer.parseInt(st.nextToken());
-			}
-			solution(note1, note1Num, note2Num, sb);
-		}
-		System.out.println(sb);
+		long N = Long.parseLong(br.readLine());
+		System.out.println(solution(N));
 	}
 
-	private static void solution(int note1, int[] note1Num, int[] note2Num, StringBuilder sb) {
-		Arrays.sort(note1Num);
-		for (int n : note2Num) {
-			int left = 0;
-			int right = note1 - 1;
-			int mid;
-			int result = 0;
-			while (left <= right) {
-				mid = (left + right) / 2;
-				if (note1Num[mid] == n) {
-					result = 1;
-					break;
-				} else if (note1Num[mid] > n) {
-					right = mid - 1;
-				} else if (note1Num[mid] < n) {
-					left = mid + 1;
-				}
+	private static long solution(long N) {
+		long left = 0, right = N;
+		long answer = N;
+		while (left <= right) {
+			long mid = (left + right) / 2;
+			if (mid > 0 && mid > N / mid) {
+				right = mid - 1;
+			} else {
+				answer = mid;
+				left = mid + 1;
 			}
-			sb.append(result).append('\n');
+		}
+		if (answer * answer >= N) {
+			return answer;
+		} else {
+			return answer + 1;
 		}
 	}
 }
