@@ -1,44 +1,56 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * Info: BOJ#20551 Sort 마스터 배지훈의 후계자
- * Ref: https://www.acmicpc.net/problem/20551
+ * Info: BOJ#15953
+ * Ref: https://www.acmicpc.net/problem/15953
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
-		int[] A = new int[N];
-		for (int i = 0; i < N; i++) {
-			A[i] = Integer.parseInt(br.readLine());
-		}
-		Arrays.sort(A);
-		for (int i = 0; i < M; i++) {
-			solution(N, A, Integer.parseInt(br.readLine()), sb);
+		int T = Integer.parseInt(br.readLine());
+		for (int i = 0; i < T; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			solution(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), sb);
 		}
 		System.out.println(sb);
 	}
 
-	private static void solution(int N, int[] A, int D, StringBuilder sb) {
-		int left = 0, right = N - 1;
-		int answer = -1;
-		while (left <= right) {
-			int mid = (left + right) / 2;
-			if (A[mid] < D) {
-				left = mid + 1;
-			} else {
-				if (A[mid] == D) answer = mid;
-				right = mid - 1;
-			}
+	private static void solution(int a, int b, StringBuilder sb) {
+		int sum = 0;
+		if (a == 0) {
+			sum += 0;
+		} else if (a <= 1) {
+			sum += 5000000;
+		} else if (a <= 3) {
+			sum += 3000000;
+		} else if (a <= 6) {
+			sum += 2000000;
+		} else if (a <= 10) {
+			sum += 500000;
+		} else if (a <= 15) {
+			sum += 300000;
+		} else if (a <= 21) {
+			sum += 100000;
 		}
-		sb.append(answer).append('\n');
+
+		if (b == 0) {
+			sum += 0;
+		} else if (b <= 1) {
+			sum += 5120000;
+		} else if (b <= 3) {
+			sum += 2560000;
+		} else if (b <= 7) {
+			sum += 1280000;
+		} else if (b <= 15) {
+			sum += 640000;
+		} else if (b <= 31) {
+			sum += 320000;
+		}
+
+		sb.append(sum).append("\n");
 	}
 }
