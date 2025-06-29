@@ -1,56 +1,65 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 /**
- * Info: BOJ#15953
- * Ref: https://www.acmicpc.net/problem/15953
+ * Info: BOJ#9024
+ * Ref: https://www.acmicpc.net/problem/9024
  */
 public class Main {
+	static int T, n, K;
+	static int[] numbers;
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		int T = Integer.parseInt(br.readLine());
-		for (int i = 0; i < T; i++) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			solution(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), sb);
-		}
-		System.out.println(sb);
-	}
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder result = new StringBuilder();
+		T = Integer.parseInt(br.readLine());
 
-	private static void solution(int a, int b, StringBuilder sb) {
-		int sum = 0;
-		if (a == 0) {
-			sum += 0;
-		} else if (a <= 1) {
-			sum += 5000000;
-		} else if (a <= 3) {
-			sum += 3000000;
-		} else if (a <= 6) {
-			sum += 2000000;
-		} else if (a <= 10) {
-			sum += 500000;
-		} else if (a <= 15) {
-			sum += 300000;
-		} else if (a <= 21) {
-			sum += 100000;
+		for (int c = 0; c < T; c++) {
+			StringTokenizer tokenizer = new StringTokenizer(br.readLine());
+			n = Integer.parseInt(tokenizer.nextToken());
+			K = Integer.parseInt(tokenizer.nextToken());
+			numbers = new int[n];
+
+			tokenizer = new StringTokenizer(br.readLine());
+			for (int i = 0; i < n; i++) {
+				numbers[i] = Integer.parseInt(tokenizer.nextToken());
+			}
+
+			Arrays.sort(numbers);
+			int closestDiff = Integer.MAX_VALUE;
+			int count = 0;
+
+			for (int i = 0; i < n; i++) {
+				int current = numbers[i];
+				int left = i + 1;
+				int right = n - 1;
+
+				while (left <= right) {
+					int mid = (left + right) / 2;
+					int sum = current + numbers[mid];
+					int diff = Math.abs(K - sum);
+
+					if (diff < closestDiff) {
+						closestDiff = diff;
+						count = 1;
+					} else if (diff == closestDiff) {
+						count++;
+					}
+
+					if (sum < K) {
+						left = mid + 1;
+					} else {
+						right = mid - 1;
+					}
+				}
+			}
+
+			result.append(count).append("\n");
 		}
 
-		if (b == 0) {
-			sum += 0;
-		} else if (b <= 1) {
-			sum += 5120000;
-		} else if (b <= 3) {
-			sum += 2560000;
-		} else if (b <= 7) {
-			sum += 1280000;
-		} else if (b <= 15) {
-			sum += 640000;
-		} else if (b <= 31) {
-			sum += 320000;
-		}
-
-		sb.append(sum).append("\n");
+		bw.write(result.toString());
+		bw.flush();
+		bw.close();
 	}
 }
