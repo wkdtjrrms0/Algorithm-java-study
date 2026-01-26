@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Info: Leetcode#3602 Hexadecimal and Hexatrigesimal Conversion
  * Ref: https://leetcode.com/problems/hexadecimal-and-hexatrigesimal-conversion
