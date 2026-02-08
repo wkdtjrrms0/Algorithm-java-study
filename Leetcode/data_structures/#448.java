@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println(findDisappearedNumbers(nums));
     }
-    
+
     private static List<Integer> findDisappearedNumbers(int[] nums) {
         List<Integer> result = new ArrayList<>();
 
