@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println(convertTime(current, correct));
     }
-    
+
     private static int convertTime(String current, String correct) {
         int curr = Integer.parseInt(current.substring(0, 2)) * 60 +
                 Integer.parseInt(current.substring(3, 5));
