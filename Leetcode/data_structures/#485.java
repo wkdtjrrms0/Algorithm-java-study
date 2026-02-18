@@ -13,7 +13,7 @@ public class Main {
 
         System.out.println(findMaxConsecutiveOnes(nums));
     }
-    
+
     private static int findMaxConsecutiveOnes(int[] nums) {
         int answer = 0;
         int tmpValue = 0;
