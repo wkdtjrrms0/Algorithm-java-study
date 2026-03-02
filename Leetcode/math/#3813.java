@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println(vowelConsonantScore(s));
     }
-    
+
     private static int vowelConsonantScore(String s) {
         int c = 0;
         int v = 0;
